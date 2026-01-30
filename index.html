@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 
+        SEO & METADATA SECTION 
+        Update these values to improve your Google Ranking
+    -->
+    <title>Er Marketer | Premium Digital Marketing & Growth Engineering</title>
+    <meta name="description" content="Er Marketer engineers high-performance digital growth systems. Specializing in Paid Ads, Technical SEO, and Web Engineering for ambitious global brands.">
+    <meta name="keywords" content="digital marketing agency, marketing engineering, performance ads, SEO audit, ermarketer.in">
+    
+    <!-- Open Graph (Social Sharing - Facebook/LinkedIn/WhatsApp) -->
+    <meta property="og:title" content="Er Marketer | Digital Growth Engineered">
+    <meta property="og:description" content="Data-driven strategies meets creative engineering. Build your digital engine today.">
+    <meta property="og:url" content="https://ermarketer.in/">
+    <meta property="og:image" content="https://ermarketer.in/assets/og-cover.jpg">
+
+    <!-- Schema.org (JSON-LD) for Google Search Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "DigitalMarketingAgency",
+      "name": "Er Marketer",
+      "url": "https://ermarketer.in",
+      "logo": "https://ermarketer.in/logo.png",
+      "sameAs": [
+        "https://linkedin.com/company/ermarketer",
+        "https://twitter.com/ermarketer"
+      ]
+    }
+    </script>
+
+    <!-- Tailwind & UI Assets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --brand-blue: #60a5fa;
+            --brand-purple: #a855f7;
+            --brand-pink: #ec4899;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-purple) 50%, var(--brand-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glassmorphism Components */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Animations */
+        .view { display: none; opacity: 0; }
+        .view.active { display: block; opacity: 1; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.12;
+        }
+
+        /* Navigation Styling */
+        .nav-link { position: relative; opacity: 0.6; transition: opacity 0.3s ease; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; }
+        .nav-link:hover, .nav-link.active { opacity: 1; color: white; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 2px; bottom: -4px; left: 0;
+            background: var(--brand-blue);
+            transition: width 0.3s ease;
+        }
+        .nav-link.active::after { width: 100%; }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            clip-path: circle(0% at 100% 0%);
+        }
+        #mobile-menu.open {
+            clip-path: circle(150% at 100% 0%);
+        }
+
+        /* Image fallbacks */
+        img { color: transparent; }
+        img[alt]:after {
+            content: attr(alt);
+            display: block;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #1e293b;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Background Effects -->
+    <div class="orb w-[600px] h-[600px] bg-blue-500 top-[-200px] right-[-200px]"></div>
+    <div class="orb w-[500px] h-[500px] bg-purple-500 bottom-[10%] left-[-200px]"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <nav class="fixed w-full z-50 px-6 py-4 top-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-panel px-6 py-4 rounded-3xl">
+            <!-- Brand / Logo Area -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="showView('home')">
+                <div class="w-10 h-10 overflow-hidden rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 transition-transform group-hover:rotate-6">
+                    <!-- Replace 'logo.png' with your actual logo file path in GitHub -->
+                    <img id="main-logo" src="logo.png" alt="ER" class="w-full h-full object-contain">
+                </div>
+                <div class="text-xl font-black tracking-tighter">
+                    ER<span class="gradient-text">MARKETER</span>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex gap-8">
+                <button onclick="showView('home')" class="nav-link active" id="nav-home">Home</button>
+                <button onclick="showView('services')" class="nav-link" id="nav-services">Services</button>
+                <button onclick="showView('blog')" class="nav-link" id="nav-blog">Insights</button>
+                <button onclick="showView('tools')" class="nav-link" id="nav-tools">Free Tools</button>
+                <button onclick="showView('contact')" class="nav-link" id="nav-contact">Contact</button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button onclick="toggleMenu()" class="lg:hidden text-2xl p-2 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <!-- Desktop Action -->
+            <button onclick="showView('contact')" class="hidden lg:block bg-white text-black px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-xl shadow-blue-600/10">
+                Book Audit
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE OVERLAY MENU -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-950/98 backdrop-blur-2xl lg:hidden flex flex-col items-center justify-center p-12">
+        <button onclick="toggleMenu()" class="absolute top-10 right-10 text-3xl text-gray-500">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        <div class="flex flex-col gap-8 text-center">
+            <button onclick="showView('home')" class="text-4xl font-black tracking-tighter hover:text-blue-500">HOME</button>
+            <button onclick="showView('services')" class="text-4xl font-black tracking-tighter hover:text-blue-500">SERVICES</button>
+            <button onclick="showView('blog')" class="text-4xl font-black tracking-tighter hover:text-blue-500">INSIGHTS</button>
+            <button onclick="showView('tools')" class="text-4xl font-black tracking-tighter hover:text-blue-500">FREE TOOLS</button>
+            <button onclick="showView('contact')" class="text-4xl font-black tracking-tighter hover:text-blue-500">CONTACT</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="relative z-10">
+
+        <!-- 1. HOME VIEW -->
+        <div id="view-home" class="view active">
+            <section class="pt-48 pb-20 px-6 min-h-screen flex items-center">
+                <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+                    <div>
+                        <div class="inline-flex items-center gap-3 px-4 py-2 mb-8 glass-panel rounded-full text-[10px] font-black uppercase tracking-widest text-blue-400">
+                            🚀 Scaling Global Marketing Systems
+                        </div>
+                        <h1 class="text-6xl md:text-8xl lg:text-[110px] font-black leading-[0.85] tracking-tighter mb-10">
+                            Digital <br><span class="gradient-text italic">Engines.</span>
+                        </h1>
+                        <p class="text-lg text-gray-400 max-w-xl mb-12 leading-relaxed font-medium">
+                            We bridge the gap between engineering and marketing. Data-driven growth frameworks designed to turn browsers into loyal customers.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <button onclick="showView('contact')" class="bg-blue-600 px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/20">
+                                Get Proposal
+                            </button>
+                            <button onclick="showView('services')" class="glass-panel px-10 py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-4 hover:bg-white/5 transition-all">
+                                How We Work <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative hidden lg:block">
+                        <div class="glass-panel p-2 w-full rounded-[4rem] transform rotate-3 hover:rotate-0 transition-transform duration-1000">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" alt="Strategy" class="rounded-[3.8rem] opacity-70">
+                        </div>
+                        <div class="absolute -bottom-10 -left-10 glass-panel p-8 rounded-3xl animate-bounce shadow-2xl">
+                            <div class="text-4xl font-black gradient-text">+312%</div>
+                            <div class="text-[9px] uppercase font-black text-gray-500 tracking-widest">Avg Conversion Gain</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. SERVICES VIEW -->
+        <div id="view-services" class="view pt-40 pb-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-20">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter">Our <span class="gradient-text italic">Stack.</span></h2>
+                    <p class="text-xl text-gray-400 max-w-2xl">Outcome-focused marketing pillars powered by engineering precision.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-panel p-12 rounded-[3.5rem] hover:border-blue-500/50 transition-all group">
+                        <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center text-3xl mb-8 text-blue-400 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-3xl font-black mb-6">Paid Ads</h3>
+                        <p class="text-gray-400 leading-relaxed mb-8">Precision targeting across Meta, Google, and TikTok. We engineer custom tracking to capture every conversion.</p>
+                        <div class="h-1 w-full bg-white/5 rounded-full"><div class="h-full bg-blue-500 w-full rounded-full"></div></div>
+                    </div>
+                    <div class="glass-panel p-12 rounded-[3.5rem] hover:border-purple-500/50 transition-all group">
+                        <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center text-3xl mb-8 text-purple-400 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-3xl font-black mb-6">Technical SEO</h3>
+                        <p class="text-gray-400 leading-relaxed mb-8">Schema engineering, page speed optimization, and semantic content strategy to dominate SERPs.</p>
+                        <div class="h-1 w-full bg-white/5 rounded-full"><div class="h-full bg-purple-500 w-full rounded-full"></div></div>
+                    </div>
+                    <div class="glass-panel p-12 rounded-[3.5rem] hover:border-pink-500/50 transition-all group">
+                        <div class="w-16 h-16 bg-pink-500/10 rounded-2xl flex items-center justify-center text-3xl mb-8 text-pink-400 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3 class="text-3xl font-black mb-6">Web Core</h3>
+                        <p class="text-gray-400 leading-relaxed mb-8">Ultra-fast landing pages built for 10%+ conversion rates using modern high-speed tech stacks.</p>
+                        <div class="h-1 w-full bg-white/5 rounded-full"><div class="h-full bg-pink-500 w-full rounded-full"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. BLOGS VIEW -->
+        <div id="view-blog" class="view pt-40 pb-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16">
+                    <h2 class="text-6xl font-black tracking-tighter mb-4 italic">The <span class="gradient-text">Insights.</span></h2>
+                    <p class="text-gray-400">Marketing philosophy meets data-driven strategy.</p>
+                </div>
+                <!-- This grid is populated automatically by the JavaScript below -->
+                <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+        </div>
+
+        <!-- 4. FREE TOOLS VIEW -->
+        <div id="view-tools" class="view pt-40 pb-24 px-6">
+            <div class="max-w-7xl mx-auto text-center mb-20">
+                <h2 class="text-6xl font-black tracking-tighter mb-6 italic">Growth <span class="gradient-text">Laboratory.</span></h2>
+                <p class="text-gray-400 max-w-xl mx-auto">Audit your marketing performance with our internal engineering tools.</p>
+            </div>
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="glass-panel p-10 rounded-[3rem]">
+                    <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                        <span class="p-3 bg-blue-500/10 rounded-xl text-blue-400"><i class="fa-solid fa-calculator"></i></span>
+                        ROAS Calculator
+                    </h3>
+                    <div class="space-y-6">
+                        <input id="t-spend" type="number" placeholder="Ad Spend ($)" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
+                        <input id="t-rev" type="number" placeholder="Revenue ($)" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
+                        <button onclick="calcROAS()" class="w-full bg-blue-600 p-5 rounded-2xl font-black text-lg hover:brightness-110">Run Audit</button>
+                        <div id="r-roas" class="hidden text-center p-8 glass-panel rounded-3xl animate-pulse">
+                            <div id="v-roas" class="text-5xl font-black gradient-text">0.0x</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-panel p-10 rounded-[3rem]">
+                    <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                        <span class="p-3 bg-purple-500/10 rounded-xl text-purple-400"><i class="fa-solid fa-chart-pie"></i></span>
+                        LTV Estimator
+                    </h3>
+                    <div class="space-y-6">
+                        <input id="t-aov" type="number" placeholder="Average Order Value ($)" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-purple-500 font-bold">
+                        <input id="t-freq" type="number" placeholder="Purchases Per Year" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-purple-500 font-bold">
+                        <button onclick="calcLTV()" class="w-full bg-purple-600 p-5 rounded-2xl font-black text-lg hover:brightness-110">Estimate LTV</button>
+                        <div id="r-ltv" class="hidden text-center p-8 glass-panel rounded-3xl animate-pulse">
+                            <div id="v-ltv" class="text-5xl font-black gradient-text">$0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. CONTACT VIEW -->
+        <div id="view-contact" class="view pt-40 pb-24 px-6">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
+                <div>
+                    <h2 class="text-6xl md:text-8xl font-black mb-10 tracking-tighter italic">Scale <br><span class="gradient-text italic leading-tight">Better.</span></h2>
+                    <p class="text-xl text-gray-400 mb-12">Connect with our engineering team for a full stack audit of your digital presence.</p>
+                    <div class="space-y-8">
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-14 h-14 glass-panel rounded-xl flex items-center justify-center text-xl text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="text-xl font-bold">growth@ermarketer.in</div>
+                        </div>
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-14 h-14 glass-panel rounded-xl flex items-center justify-center text-xl text-purple-400 group-hover:bg-purple-600 group-hover:text-white transition-all"><i class="fa-solid fa-video"></i></div>
+                            <div class="text-xl font-bold">Schedule Strategy Call</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-panel p-10 rounded-[3.5rem]">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Full Name" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
+                            <input type="url" placeholder="Website Link" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
+                        </div>
+                        <select class="w-full bg-slate-900 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
+                            <option value="ads">Performance Ads Management</option>
+                            <option value="seo">Technical SEO Engagement</option>
+                            <option value="web">Conversion Web Engineering</option>
+                        </select>
+                        <textarea rows="4" placeholder="How can we help?" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold"></textarea>
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 p-5 rounded-2xl font-black text-xl hover:brightness-110 shadow-xl shadow-blue-500/20">
+                            Send Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="pt-24 pb-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-12 text-center lg:text-left">
+            <div>
+                <div class="text-2xl font-black mb-4">ER<span class="gradient-text">MARKETER</span></div>
+                <p class="text-gray-500 max-w-sm">Built for high-performance brands that demand data-driven results.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-10 text-[10px] font-black uppercase tracking-widest text-gray-500">
+                <button onclick="showView('home')" class="hover:text-white">Home</button>
+                <button onclick="showView('services')" class="hover:text-white">Services</button>
+                <button onclick="showView('blog')" class="hover:text-white">Blogs</button>
+                <button onclick="showView('tools')" class="hover:text-white">Tools</button>
+                <button onclick="showView('contact')" class="hover:text-white">Contact</button>
+            </div>
+            <div class="flex gap-6 text-xl text-gray-600">
+                <a href="#" class="hover:text-white"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="hover:text-white"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 text-[10px] font-black uppercase tracking-[0.4em] text-gray-800 text-center">
+            &copy; 2026 ERMARKETER.IN • DIGITAL GROWTH ENGINEERED
+        </div>
+    </footer>
+
+    <!-- 
+        JAVASCRIPT SECTION 
+    -->
+    <script>
+        // --- 1. BLOG MANAGEMENT ---
+        // Easy GitHub Editing: Just add new items to this array to add blogs!
+        const blogPosts = [
+            {
+                title: "The Shift to First-Party Data in 2026",
+                category: "Ads Strategy",
+                image: "https://images.unsplash.com/photo-1551288049-bbb65216f785?auto=format&fit=crop&q=80&w=800",
+                desc: "Why traditional cookie tracking is dead and what engineers are doing to fix attribution."
+            },
+            {
+                title: "AI Overviews & Semantic Search",
+                category: "Technical SEO",
+                image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800",
+                desc: "How to rank your content when Google stops sending traffic to traditional links."
+            },
+            {
+                title: "Core Web Vitals vs. Conversions",
+                category: "Web Performance",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+                desc: "Every 100ms of delay is costing you 7% in total revenue. Let's fix the stack."
+            }
+        ];
+
+        function renderBlogs() {
+            const grid = document.getElementById('blog-grid');
+            grid.innerHTML = blogPosts.map(post => `
+                <article class="glass-panel rounded-[2.5rem] overflow-hidden group cursor-pointer border-none">
+                    <div class="h-64 relative overflow-hidden bg-slate-900">
+                        <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"></div>
+                    </div>
+                    <div class="p-10 relative mt-[-60px]">
+                        <span class="bg-blue-600 text-[10px] font-black uppercase px-3 py-1 rounded-lg mb-4 inline-block tracking-widest">${post.category}</span>
+                        <h3 class="text-2xl font-black mb-4 group-hover:text-blue-400 transition-colors tracking-tighter">${post.title}</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">${post.desc}</p>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // --- 2. NAVIGATION LOGIC ---
+        const menu = document.getElementById('mobile-menu');
+        function toggleMenu() {
+            menu.classList.toggle('open');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function showView(id) {
+            menu.classList.remove('open');
+            document.body.style.overflow = '';
+            
+            // Toggle Content
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            const target = document.getElementById('view-' + id);
+            if(target) target.classList.add('active');
+
+            // Toggle Navigation Styles
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.id === 'nav-' + id) link.classList.add('active');
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 3. TOOLS LOGIC ---
+        function calcROAS() {
+            const s = document.getElementById('t-spend').value;
+            const r = document.getElementById('t-rev').value;
+            if(s && r) {
+                const res = (r / s).toFixed(1);
+                document.getElementById('v-roas').innerText = res + 'x';
+                document.getElementById('r-roas').classList.remove('hidden');
+            }
+        }
+
+        function calcLTV() {
+            const aov = document.getElementById('t-aov').value;
+            const freq = document.getElementById('t-freq').value;
+            if(aov && freq) {
+                const ltv = (aov * freq * 3).toFixed(0);
+                document.getElementById('v-ltv').innerText = '$' + ltv;
+                document.getElementById('r-ltv').classList.remove('hidden');
+            }
+        }
+
+        // --- 4. FORM LOGIC ---
+        document.getElementById('contactForm').onsubmit = (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'PROPOSAL INITIATED ✓';
+            btn.style.background = 'linear-gradient(to right, #10b981, #059669)';
+            e.target.reset();
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = '';
+            }, 3000);
+        };
+
+        // Initialize Blogs on Load
+        window.onload = renderBlogs;
+    </script>
+</body>
+</html>
