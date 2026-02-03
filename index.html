@@ -38,8 +38,9 @@
             color: #f8fafc;
             margin: 0;
             padding: 0;
-            width: 100vw;
+            width: 100%;
             overflow-x: hidden;
+            position: relative;
         }
 
         .gradient-text {
@@ -52,25 +53,32 @@
         nav {
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            background: rgba(2, 6, 23, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(2, 6, 23, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         .glass-panel {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
         }
 
-        /* View Switching Logic */
+        /* View Switching System */
         .view { display: none; opacity: 0; }
-        .view.active { display: block; opacity: 1; animation: fadeIn 0.4s ease-out; }
+        .view.active { display: block; opacity: 1; animation: fadeIn 0.5s ease-out; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Glowing Orbs - Contained to prevent horizontal scrolling */
+        /* Background Control */
         .orb-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -82,69 +90,77 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.1;
+            filter: blur(120px);
+            opacity: 0.15;
         }
 
-        /* Responsive Fixes */
+        /* Mobile Stability */
         @media (max-width: 768px) {
             .view { padding-left: 1rem; padding-right: 1rem; }
-            h1 { font-size: 3.5rem !important; }
+            h1 { font-size: 3.5rem !important; line-height: 1.1 !important; }
+            .hero-btn { width: 100%; }
         }
 
         #mobile-menu {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
+            background: rgba(2, 6, 23, 0.98);
+            backdrop-filter: blur(20px);
         }
         #mobile-menu.open { transform: translateX(0); }
 
-        details > summary { list-style: none; }
+        details > summary { list-style: none; outline: none; }
         details > summary::-webkit-details-marker { display: none; }
+        
+        .nav-btn {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
-    <!-- Contained Background Orbs -->
+    <!-- Ambient Background -->
     <div class="orb-container">
-        <div class="orb w-[500px] h-[500px] bg-blue-600 top-[-200px] right-[-100px]"></div>
-        <div class="orb w-[400px] h-[400px] bg-purple-600 bottom-[-100px] left-[-100px]"></div>
+        <div class="orb w-[600px] h-[600px] bg-blue-600 top-[-200px] right-[-100px]"></div>
+        <div class="orb w-[500px] h-[500px] bg-purple-600 bottom-[-150px] left-[-150px]"></div>
     </div>
 
-    <!-- HEADER -->
-    <nav class="fixed w-full z-50 px-4 md:px-6 py-4 top-0">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <!-- Brand -->
-            <div class="flex items-center gap-2 cursor-pointer group" onclick="showView('home')">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-black text-white transform group-hover:rotate-6 transition-all shadow-lg shadow-blue-500/20">ER</div>
-                <div class="text-xl font-extrabold tracking-tighter">
+    <!-- STABLE HEADER -->
+    <nav class="py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="showView('home')">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-black text-white transform group-hover:rotate-12 transition-all shadow-xl shadow-blue-500/30">ER</div>
+                <div class="text-xl font-black tracking-tighter">
                     ER<span class="gradient-text">MARKETERS</span>
                 </div>
             </div>
 
-            <!-- Desktop Links -->
-            <div class="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-                <button onclick="showView('home')" class="hover:text-white transition-colors">Home</button>
-                <button onclick="showView('services')" class="hover:text-white transition-colors">Services</button>
-                <button onclick="showView('blog')" class="hover:text-white transition-colors">Insights</button>
-                <button onclick="showView('tools')" class="hover:text-white transition-colors">Tools</button>
-                <button onclick="showView('contact')" class="hover:text-white transition-colors">Contact</button>
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex gap-10">
+                <button onclick="showView('home')" class="nav-btn text-gray-400 hover:text-white">Home</button>
+                <button onclick="showView('services')" class="nav-btn text-gray-400 hover:text-white">Services</button>
+                <button onclick="showView('blog')" class="nav-btn text-gray-400 hover:text-white">Insights</button>
+                <button onclick="showView('tools')" class="nav-btn text-gray-400 hover:text-white">Tools</button>
+                <button onclick="showView('contact')" class="nav-btn text-gray-400 hover:text-white">Contact</button>
             </div>
 
-            <!-- Mobile Toggle -->
             <button onclick="toggleMenu()" class="lg:hidden text-2xl text-gray-300">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
 
-            <!-- CTA -->
-            <button onclick="showView('contact')" class="hidden lg:block bg-white text-black px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-xl shadow-blue-600/10">
-                Scale Now
+            <button onclick="showView('contact')" class="hidden lg:block bg-white text-black px-6 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">
+                Hire Team
             </button>
         </div>
     </nav>
 
-    <!-- MOBILE MENU -->
-    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-950 flex flex-col items-center justify-center lg:hidden">
-        <button onclick="toggleMenu()" class="absolute top-10 right-10 text-3xl text-gray-400"><i class="fa-solid fa-times"></i></button>
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] flex flex-col items-center justify-center lg:hidden">
+        <button onclick="toggleMenu()" class="absolute top-10 right-10 text-3xl text-gray-500"><i class="fa-solid fa-times"></i></button>
         <div class="flex flex-col gap-10 text-center">
             <button onclick="showView('home')" class="text-4xl font-black tracking-tighter hover:text-blue-500">HOME</button>
             <button onclick="showView('services')" class="text-4xl font-black tracking-tighter hover:text-blue-500">SERVICES</button>
@@ -154,39 +170,36 @@
         </div>
     </div>
 
-    <!-- MAIN VIEWS -->
-    <main class="w-full">
+    <!-- CONTENT VIEWS -->
+    <main class="w-full pt-20">
 
-        <!-- 1. HOME VIEW -->
+        <!-- 1. HOME VIEW (7 SECTIONS) -->
         <div id="view-home" class="view active">
-            <!-- Hero -->
-            <section class="pt-40 pb-20 max-w-7xl mx-auto flex flex-col items-center text-center px-6 min-h-[90vh] justify-center">
-                <div class="inline-flex items-center gap-2 px-4 py-2 mb-8 glass-panel rounded-full text-[10px] font-black uppercase tracking-widest text-blue-400">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                    </span>
-                    The Growth Engineering Agency
+            
+            <!-- Hero Section -->
+            <section class="pt-20 pb-20 max-w-7xl mx-auto flex flex-col items-center text-center px-6 min-h-[85vh] justify-center">
+                <div class="inline-flex items-center gap-3 px-5 py-2 mb-8 glass-panel rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">
+                    🚀 Engineering Growth Excellence
                 </div>
-                <h1 class="text-6xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-10">
-                    Growth <br><span class="gradient-text italic">Refined.</span>
+                <h1 class="text-6xl md:text-[110px] font-black leading-[0.85] tracking-tighter mb-10">
+                    Scale <br><span class="gradient-text italic">Predictably.</span>
                 </h1>
-                <p class="text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed font-medium">
-                    We don't just "do marketing." We build data-driven growth engines for global brands using technical precision and creative strategy.
+                <p class="text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed font-medium px-4">
+                    Data-driven growth engines for global brands. We combine technical precision with performance marketing to dominate your niche.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-6">
-                    <button onclick="showView('contact')" class="bg-blue-600 px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-2xl shadow-blue-500/20">Get A Proposal</button>
-                    <button onclick="showView('services')" class="glass-panel px-10 py-5 rounded-2xl font-black text-lg hover:bg-white/5 transition-all">How We Work</button>
+                <div class="flex flex-col sm:flex-row gap-6 w-full sm:w-auto px-6">
+                    <button onclick="showView('contact')" class="hero-btn bg-blue-600 px-12 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 transition-all shadow-2xl shadow-blue-500/20">Analyze My Brand</button>
+                    <button onclick="showView('services')" class="hero-btn glass-panel px-12 py-5 rounded-2xl font-black text-lg hover:bg-white/5 transition-all">How We Work</button>
                 </div>
             </section>
 
-            <!-- Trust Bar -->
-            <section class="py-16 border-y border-white/5 bg-white/1">
-                <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center opacity-40 grayscale">
-                    <div class="text-2xl font-bold tracking-tighter">FINTECH</div>
-                    <div class="text-2xl font-bold tracking-tighter">SaaS-Y</div>
-                    <div class="text-2xl font-bold tracking-tighter">RETAILX</div>
-                    <div class="text-2xl font-bold tracking-tighter">DTC.CO</div>
+            <!-- Trust Bar Section -->
+            <section class="py-16 border-y border-white/5 bg-white/[0.01]">
+                <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center opacity-30 grayscale">
+                    <div class="text-xl font-bold tracking-widest uppercase italic">Fintech</div>
+                    <div class="text-xl font-bold tracking-widest uppercase italic">E-Commerce</div>
+                    <div class="text-xl font-bold tracking-widest uppercase italic">SaaS</div>
+                    <div class="text-xl font-bold tracking-widest uppercase italic">Logistics</div>
                 </div>
             </section>
 
@@ -194,163 +207,162 @@
             <section class="py-24 px-6 max-w-7xl mx-auto">
                 <div class="grid md:grid-cols-2 gap-20 items-center">
                     <div>
-                        <h2 class="text-5xl font-black mb-8 leading-tight">Most agencies guess. <br><span class="gradient-text italic">We Engineer.</span></h2>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">Traditional agencies focus on awards. We focus on attribution. We bridge the gap between high-speed code and high-impact performance marketing.</p>
-                        <ul class="space-y-4 font-bold text-gray-300">
-                            <li><i class="fa-solid fa-circle-check text-blue-500 mr-3"></i> Sub-second Landing Page Speeds</li>
-                            <li><i class="fa-solid fa-circle-check text-blue-500 mr-3"></i> Server-side Conversion Tracking</li>
-                            <li><i class="fa-solid fa-circle-check text-blue-500 mr-3"></i> Proprietary Media Buying Frameworks</li>
-                        </ul>
-                    </div>
-                    <div class="glass-panel p-10 rounded-[4rem] relative overflow-hidden">
-                        <div class="text-center mb-8">
-                            <div class="text-sm uppercase font-black text-gray-500 tracking-widest mb-2">Efficiency Gain</div>
-                            <div class="text-7xl font-black gradient-text tracking-tighter">+412%</div>
+                        <h2 class="text-5xl font-black mb-8 leading-tight tracking-tighter">Most Agencies Guess. <br><span class="gradient-text italic">We Use Data.</span></h2>
+                        <p class="text-gray-400 text-lg leading-relaxed mb-8">Stop burning budget on "creative experiments." Our engineering-first approach ensures every dollar is tracked, optimized, and scalable.</p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="glass-panel p-6 rounded-3xl text-center">
+                                <div class="text-blue-500 font-black mb-1">0%</div>
+                                <div class="text-[10px] uppercase font-bold text-gray-500">Waste Policy</div>
+                            </div>
+                            <div class="glass-panel p-6 rounded-3xl text-center">
+                                <div class="text-purple-500 font-black mb-1">24/7</div>
+                                <div class="text-[10px] uppercase font-bold text-gray-500">Monitoring</div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="glass-panel p-10 rounded-[3rem] relative text-center">
+                        <div class="text-sm uppercase font-black text-gray-500 tracking-widest mb-4">Growth Snapshot</div>
+                        <div class="text-6xl font-black gradient-text mb-6">+412% ROAS</div>
                         <div class="space-y-4">
-                            <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-blue-500 w-3/4"></div></div>
-                            <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-purple-500 w-1/2"></div></div>
-                            <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-pink-500 w-4/5"></div></div>
+                            <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-blue-500 w-[90%]"></div></div>
+                            <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-purple-500 w-[75%]"></div></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- The Process -->
-            <section class="py-24 px-6 bg-blue-600/5">
-                <div class="max-w-7xl mx-auto text-center mb-20">
-                    <h2 class="text-5xl font-black mb-6 italic tracking-tighter">The <span class="gradient-text">Protocol.</span></h2>
-                    <p class="text-gray-400">Four steps to absolute market dominance.</p>
-                </div>
-                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div class="glass-panel p-8 rounded-[2.5rem] text-center">
-                        <div class="text-3xl font-black mb-4 text-blue-500">01</div>
-                        <h3 class="text-xl font-bold mb-3 uppercase tracking-tighter">Audit</h3>
-                        <p class="text-gray-500 text-sm">We dissect your current stack and performance metrics.</p>
-                    </div>
-                    <div class="glass-panel p-8 rounded-[2.5rem] text-center">
-                        <div class="text-3xl font-black mb-4 text-purple-500">02</div>
-                        <h3 class="text-xl font-bold mb-3 uppercase tracking-tighter">Architect</h3>
-                        <p class="text-gray-500 text-sm">We build a custom growth engine tailored to your ROAS goals.</p>
-                    </div>
-                    <div class="glass-panel p-8 rounded-[2.5rem] text-center">
-                        <div class="text-3xl font-black mb-4 text-pink-500">03</div>
-                        <h3 class="text-xl font-bold mb-3 uppercase tracking-tighter">Deploy</h3>
-                        <p class="text-gray-500 text-sm">High-velocity testing across ads, SEO, and web core.</p>
-                    </div>
-                    <div class="glass-panel p-8 rounded-[2.5rem] text-center">
-                        <div class="text-3xl font-black mb-4 text-emerald-500">04</div>
-                        <h3 class="text-xl font-bold mb-3 uppercase tracking-tighter">Scale</h3>
-                        <p class="text-gray-500 text-sm">Uncapped growth based on proven data and profit.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tech Stack Section -->
+            <!-- Service Bento Section -->
             <section class="py-24 px-6 max-w-7xl mx-auto">
-                <div class="glass-panel p-16 rounded-[4rem] flex flex-col lg:flex-row items-center justify-between gap-12">
-                    <div class="max-w-lg">
-                        <h2 class="text-4xl font-black mb-6 tracking-tighter uppercase">Engineered for <br><span class="gradient-text italic">Performance.</span></h2>
-                        <p class="text-gray-400 text-lg">We don't use slow builders. Every ermarketers project is custom-coded for sub-second speeds and flawless SEO.</p>
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl font-black mb-6 tracking-tighter italic">The <span class="gradient-text">Core Stack.</span></h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-panel p-10 rounded-[3rem] border-b-4 border-blue-500 hover:bg-blue-500/5 transition-colors">
+                        <i class="fa-solid fa-bullseye text-3xl mb-6 text-blue-500"></i>
+                        <h3 class="text-2xl font-black mb-4">Paid Ads</h3>
+                        <p class="text-gray-500 text-sm">Meta, Google, & TikTok campaigns built on custom server-side attribution for perfect tracking.</p>
                     </div>
-                    <div class="flex flex-wrap gap-8 justify-center text-4xl text-gray-500">
-                        <i class="fa-brands fa-react hover:text-blue-400 transition-colors"></i>
-                        <i class="fa-brands fa-node-js hover:text-green-500 transition-colors"></i>
-                        <i class="fa-brands fa-google hover:text-red-500 transition-colors"></i>
-                        <i class="fa-brands fa-aws hover:text-orange-400 transition-colors"></i>
+                    <div class="glass-panel p-10 rounded-[3rem] border-b-4 border-purple-500 hover:bg-purple-500/5 transition-colors">
+                        <i class="fa-solid fa-magnifying-glass text-3xl mb-6 text-purple-500"></i>
+                        <h3 class="text-2xl font-black mb-4">SEO 2.0</h3>
+                        <p class="text-gray-500 text-sm">Technical SEO engineering to dominate search intent and build domain authority that lasts.</p>
+                    </div>
+                    <div class="glass-panel p-10 rounded-[3rem] border-b-4 border-pink-500 hover:bg-pink-500/5 transition-colors">
+                        <i class="fa-solid fa-bolt text-3xl mb-6 text-pink-500"></i>
+                        <h3 class="text-2xl font-black mb-4">Web Core</h3>
+                        <p class="text-gray-500 text-sm">Ultra-fast conversion pages designed for sub-second speeds and high-velocity scaling.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- FAQ Section -->
+            <!-- Process Roadmap -->
+            <section class="py-24 px-6 bg-white/[0.01]">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+                        <div class="relative">
+                            <div class="text-6xl font-black opacity-10 mb-[-30px]">01</div>
+                            <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">Audit</h4>
+                            <p class="text-gray-500 text-sm">Full dissection of your tracking, ad history, and infrastructure.</p>
+                        </div>
+                        <div class="relative">
+                            <div class="text-6xl font-black opacity-10 mb-[-30px]">02</div>
+                            <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">Plan</h4>
+                            <p class="text-gray-500 text-sm">Architecting the growth engine blueprint tailored for your KPIs.</p>
+                        </div>
+                        <div class="relative">
+                            <div class="text-6xl font-black opacity-10 mb-[-30px]">03</div>
+                            <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">Execute</h4>
+                            <p class="text-gray-500 text-sm">High-velocity deployment, A/B testing, and optimization loops.</p>
+                        </div>
+                        <div class="relative">
+                            <div class="text-6xl font-black opacity-10 mb-[-30px]">04</div>
+                            <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">Scale</h4>
+                            <p class="text-gray-500 text-sm">Aggressive expansion based on proven profit and retention metrics.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Trust Section -->
             <section class="py-24 px-6 max-w-4xl mx-auto">
-                <h2 class="text-4xl font-black mb-12 text-center tracking-tighter">Common <span class="gradient-text">Queries.</span></h2>
+                <h2 class="text-4xl font-black mb-12 text-center tracking-tighter uppercase">Insights & <span class="gradient-text">F.A.Q</span></h2>
                 <div class="space-y-4">
-                    <details class="glass-panel p-6 rounded-2xl group cursor-pointer" open>
-                        <summary class="flex justify-between items-center font-bold text-lg">
-                            How do you differ from a standard agency?
+                    <details class="glass-panel p-6 rounded-3xl group cursor-pointer" open>
+                        <summary class="flex justify-between items-center font-bold">
+                            What makes Er Marketers different?
                             <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
                         </summary>
-                        <p class="mt-4 text-gray-500 leading-relaxed text-sm">We are engineers first. While most agencies focus on "creativity" alone, we prioritize technical attribution, page speed, and data transparency.</p>
+                        <p class="mt-4 text-gray-500 text-sm">We focus on engineering rather than just creative. Our pages load in under 1 second, and our tracking is server-side, meaning we catch data that others miss.</p>
                     </details>
-                    <details class="glass-panel p-6 rounded-2xl group cursor-pointer">
-                        <summary class="flex justify-between items-center font-bold text-lg">
-                            What is the typical project timeline?
-                            <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
-                        </summary>
-                        <p class="mt-4 text-gray-500 leading-relaxed text-sm">Audits take 1 week. Strategy deployment usually takes 3-4 weeks. Scaling starts from month 2 once baseline metrics are validated.</p>
-                    </details>
-                    <details class="glass-panel p-6 rounded-2xl group cursor-pointer">
-                        <summary class="flex justify-between items-center font-bold text-lg">
+                    <details class="glass-panel p-6 rounded-3xl group cursor-pointer">
+                        <summary class="flex justify-between items-center font-bold">
                             Do you work with startups?
                             <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
                         </summary>
-                        <p class="mt-4 text-gray-500 leading-relaxed text-sm">We work with seed-funded or profitable startups that are ready to scale their validated product-market fit.</p>
+                        <p class="mt-4 text-gray-500 text-sm">Yes. We work with seed-funded or profitable startups that are ready to scale their validated product-market fit to global audiences.</p>
                     </details>
                 </div>
             </section>
 
-            <!-- Final CTA -->
-            <section class="py-24 px-6 max-w-7xl mx-auto text-center">
-                <div class="glass-panel p-20 rounded-[4rem] relative overflow-hidden">
+            <!-- Final CTA Section -->
+            <section class="py-32 px-6 max-w-7xl mx-auto text-center">
+                <div class="glass-panel p-16 md:p-24 rounded-[4rem] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h2 class="text-6xl font-black mb-8 tracking-tighter italic">Ready to <span class="gradient-text italic">Innovate?</span></h2>
-                        <button onclick="showView('contact')" class="bg-white text-black px-12 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl">Start Your Growth Audit</button>
+                        <h2 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter italic uppercase leading-none">Ready to <br><span class="gradient-text italic">Innovate?</span></h2>
+                        <button onclick="showView('contact')" class="bg-white text-black px-12 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl">Request Growth Blueprint</button>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- 2. SERVICES VIEW -->
-        <div id="view-services" class="view pt-40 pb-24 px-6 max-w-7xl mx-auto">
-            <h2 class="text-7xl font-black mb-16 tracking-tighter italic">The <span class="gradient-text">Stack.</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-panel p-12 rounded-[3.5rem] border-b-4 border-blue-500">
-                    <div class="text-4xl mb-8"><i class="fa-solid fa-crosshairs text-blue-500"></i></div>
-                    <h3 class="text-3xl font-black mb-6">Performance Ads</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Meta, Google, and TikTok ads engineered for high ROAS. We build custom server-side tracking to capture every dollar of intent.</p>
+        <!-- OTHER VIEWS -->
+        <div id="view-services" class="view pt-20 pb-24 px-6 max-w-7xl mx-auto">
+            <h2 class="text-7xl font-black mb-16 tracking-tighter italic uppercase leading-none">Our <span class="gradient-text italic">Stack.</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="glass-panel p-12 rounded-[3rem] border-b-4 border-blue-500">
+                    <div class="text-4xl mb-8"><i class="fa-solid fa-chart-pie text-blue-500"></i></div>
+                    <h3 class="text-3xl font-black mb-4">Paid Performance</h3>
+                    <p class="text-gray-500 leading-relaxed">Meta, Google, TikTok, and Programmatic advertising. We target high-intent audiences with algorithmic precision and custom tracking.</p>
                 </div>
-                <div class="glass-panel p-12 rounded-[3.5rem] border-b-4 border-purple-500">
-                    <div class="text-4xl mb-8"><i class="fa-solid fa-rocket text-purple-500"></i></div>
-                    <h3 class="text-3xl font-black mb-6">Technical SEO</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Schema engineering, page speed optimization, and semantic content strategy to dominate the SERPs permanently.</p>
+                <div class="glass-panel p-12 rounded-[3rem] border-b-4 border-purple-500">
+                    <div class="text-4xl mb-8"><i class="fa-solid fa-microchip text-purple-500"></i></div>
+                    <h3 class="text-3xl font-black mb-4">Technical SEO</h3>
+                    <p class="text-gray-500 leading-relaxed">Schema engineering, infrastructure audits, and semantic content mapping to dominate organic search results permanently.</p>
                 </div>
-                <div class="glass-panel p-12 rounded-[3.5rem] border-b-4 border-pink-500">
+                <div class="glass-panel p-12 rounded-[3rem] border-b-4 border-pink-500">
                     <div class="text-4xl mb-8"><i class="fa-solid fa-code text-pink-500"></i></div>
-                    <h3 class="text-3xl font-black mb-6">Web Engineering</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Sub-second landing pages built with modern tech stacks (React/Astro) designed for conversion from the first click.</p>
+                    <h3 class="text-3xl font-black mb-4">Conversion Web</h3>
+                    <p class="text-gray-500 leading-relaxed">We build ultra-fast, modern web experiences designed solely to turn visitors into revenue with zero technical friction.</p>
                 </div>
             </div>
         </div>
 
-        <!-- 3. BLOGS VIEW -->
-        <div id="view-blog" class="view pt-40 pb-24 px-6 max-w-7xl mx-auto">
-            <h2 class="text-7xl font-black mb-16 tracking-tighter italic">Growth <span class="gradient-text">Insights.</span></h2>
+        <div id="view-blog" class="view pt-20 pb-24 px-6 max-w-7xl mx-auto">
+            <h2 class="text-7xl font-black mb-16 tracking-tighter italic uppercase leading-none">Growth <span class="gradient-text italic">Insights.</span></h2>
             <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
         </div>
 
-        <!-- 4. TOOLS VIEW -->
-        <div id="view-tools" class="view pt-40 pb-24 px-6 max-w-7xl mx-auto">
-            <h2 class="text-7xl font-black mb-16 tracking-tighter italic text-center">Growth <span class="gradient-text">Lab.</span></h2>
+        <div id="view-tools" class="view pt-20 pb-24 px-6 max-w-7xl mx-auto">
+            <h2 class="text-7xl font-black mb-16 tracking-tighter italic uppercase leading-none text-center">Free <span class="gradient-text italic">Lab.</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                <div class="glass-panel p-12 rounded-[3rem]">
-                    <h3 class="text-2xl font-black mb-8 flex items-center gap-4"><i class="fa-solid fa-calculator text-blue-500"></i> ROAS Calculator</h3>
+                <div class="glass-panel p-12 rounded-[3.5rem]">
+                    <h3 class="text-2xl font-black mb-8 flex items-center gap-4"><i class="fa-solid fa-calculator text-blue-500"></i> ROAS Analyzer</h3>
                     <div class="space-y-6">
                         <input id="t-spend" type="number" placeholder="Monthly Ad Spend ($)" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
                         <input id="t-rev" type="number" placeholder="Generated Revenue ($)" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
                         <button onclick="calcROAS()" class="w-full bg-blue-600 p-5 rounded-2xl font-black text-lg hover:brightness-110">Analyze Performance</button>
-                        <div id="r-roas" class="hidden text-center p-8 glass-panel rounded-2xl animate-pulse">
+                        <div id="r-roas" class="hidden text-center p-8 glass-panel rounded-2xl mt-4">
                             <div id="v-roas" class="text-5xl font-black gradient-text">0.0x</div>
                         </div>
                     </div>
                 </div>
-                <div class="glass-panel p-12 rounded-[3rem]">
+                <div class="glass-panel p-12 rounded-[3.5rem]">
                     <h3 class="text-2xl font-black mb-8 flex items-center gap-4"><i class="fa-solid fa-infinity text-purple-500"></i> LTV Estimator</h3>
                     <div class="space-y-6">
                         <input id="t-aov" type="number" placeholder="Avg Order Value ($)" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-purple-500 font-bold">
                         <input id="t-freq" type="number" placeholder="Purchases Per Year" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-purple-500 font-bold">
                         <button onclick="calcLTV()" class="w-full bg-purple-600 p-5 rounded-2xl font-black text-lg hover:brightness-110">Predict 3yr Value</button>
-                        <div id="r-ltv" class="hidden text-center p-8 glass-panel rounded-2xl animate-pulse">
+                        <div id="r-ltv" class="hidden text-center p-8 glass-panel rounded-2xl mt-4">
                             <div id="v-ltv" class="text-5xl font-black gradient-text">$0</div>
                         </div>
                     </div>
@@ -358,27 +370,25 @@
             </div>
         </div>
 
-        <!-- 5. CONTACT VIEW -->
-        <div id="view-contact" class="view pt-40 pb-24 px-6 max-w-7xl mx-auto">
+        <div id="view-contact" class="view pt-20 pb-24 px-6 max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-24 items-start">
                 <div>
                     <h2 class="text-7xl font-black mb-10 tracking-tighter italic leading-[0.9]">Scale <br><span class="gradient-text italic">Smarter.</span></h2>
-                    <p class="text-xl text-gray-500 mb-12">Connect with our growth engineers to unlock your brand's true performance potential.</p>
-                    <div class="space-y-6 text-xl font-bold">
-                        <div class="flex items-center gap-4"><i class="fa-solid fa-envelope text-blue-500"></i> growth@ermarketers.in</div>
-                        <div class="flex items-center gap-4"><i class="fa-solid fa-phone text-purple-500"></i> Request Call Back</div>
+                    <p class="text-xl text-gray-500 mb-12">Connect with our growth engineers to unlock your brand's true performance potential. No fluff, just results.</p>
+                    <div class="space-y-6 text-xl font-bold text-gray-400">
+                        <div class="flex items-center gap-4 hover:text-white transition-colors cursor-pointer"><i class="fa-solid fa-envelope text-blue-500"></i> growth@ermarketers.in</div>
                     </div>
                 </div>
-                <div class="glass-panel p-10 rounded-[4rem]">
+                <div class="glass-panel p-10 rounded-[3.5rem]">
                     <form id="growthForm" class="space-y-6">
-                        <input type="text" placeholder="Full Name" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
-                        <input type="url" placeholder="Company Website" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
-                        <select class="w-full bg-slate-900 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold">
+                        <input type="text" placeholder="Full Name" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold text-white">
+                        <input type="url" placeholder="Company Website" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold text-white">
+                        <select class="w-full bg-slate-900 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold text-gray-400">
                             <option value="ads">Performance Ads Scaling</option>
                             <option value="seo">SEO & Content Authority</option>
                             <option value="web">Conversion Web Engineering</option>
                         </select>
-                        <textarea rows="4" placeholder="Your Growth Goals..." class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold"></textarea>
+                        <textarea rows="4" placeholder="Your Growth Goals..." class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold text-white"></textarea>
                         <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-2xl font-black text-xl hover:brightness-110 shadow-xl shadow-blue-600/20">Analyze My Brand</button>
                     </form>
                 </div>
@@ -390,10 +400,10 @@
     <footer class="pt-24 pb-12 px-6 border-t border-white/5 text-center lg:text-left">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-12">
             <div>
-                <div class="text-2xl font-black mb-4 tracking-tighter">ER<span class="gradient-text">MARKETERS</span></div>
-                <p class="text-gray-500 max-w-sm">Engineering growth for premium brands that demand results.</p>
+                <div class="text-2xl font-black mb-4 tracking-tighter uppercase">ER<span class="gradient-text italic">MARKETERS</span></div>
+                <p class="text-gray-500 max-w-sm">Engineering growth for premium brands that demand algorithmic results.</p>
             </div>
-            <div class="flex flex-wrap justify-center gap-10 text-[10px] font-black uppercase tracking-widest text-gray-600">
+            <div class="flex flex-wrap justify-center gap-8 text-[10px] font-black uppercase tracking-widest text-gray-600">
                 <button onclick="showView('home')" class="hover:text-white transition-colors">Home</button>
                 <button onclick="showView('services')" class="hover:text-white transition-colors">Services</button>
                 <button onclick="showView('blog')" class="hover:text-white transition-colors">Insights</button>
@@ -402,7 +412,7 @@
             </div>
             <div class="flex gap-8 text-2xl text-gray-700">
                 <i class="fa-brands fa-linkedin-in hover:text-white transition-colors cursor-pointer"></i>
-                <i class="fa-brands fa-twitter hover:text-white transition-colors cursor-pointer"></i>
+                <i class="fa-brands fa-x-twitter hover:text-white transition-colors cursor-pointer"></i>
                 <i class="fa-brands fa-instagram hover:text-white transition-colors cursor-pointer"></i>
             </div>
         </div>
@@ -412,30 +422,16 @@
     </footer>
 
     <script>
-        // --- 1. BLOG MANAGEMENT ---
+        // --- BLOGS ---
         const blogPosts = [
-            {
-                title: "Deciphering Attribution in 2026",
-                category: "Performance",
-                image: "https://images.unsplash.com/photo-1551288049-bbb65216f785?auto=format&fit=crop&q=80&w=800",
-                desc: "Why traditional cookie tracking is failing and how engineers are fixing ROAS reporting."
-            },
-            {
-                title: "The SEO Power of Page Speed",
-                category: "Technical",
-                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
-                desc: "Every 100ms of delay costs 7% in conversion. We look at the data behind the speed."
-            },
-            {
-                title: "AI Overviews & Search Dominance",
-                category: "Content",
-                image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800",
-                desc: "How to rank your brand inside Gemini and OpenAI search interfaces directly."
-            }
+            { title: "Deciphering Attribution in 2026", category: "Performance", image: "https://images.unsplash.com/photo-1551288049-bbb65216f785?auto=format&fit=crop&q=80&w=800", desc: "Why traditional cookie tracking is failing and how engineers are fixing ROAS reporting." },
+            { title: "The SEO Power of Page Speed", category: "Technical", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", desc: "Every 100ms of delay costs 7% in conversion. We look at the data behind the speed." },
+            { title: "AI Overviews & Search Dominance", category: "Content", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800", desc: "How to rank your brand inside Gemini and OpenAI search interfaces directly." }
         ];
 
         function renderBlogs() {
             const grid = document.getElementById('blog-grid');
+            if(!grid) return;
             grid.innerHTML = blogPosts.map(post => `
                 <article class="glass-panel rounded-[3rem] overflow-hidden group cursor-pointer">
                     <div class="h-64 relative overflow-hidden bg-slate-900">
@@ -451,7 +447,7 @@
             `).join('');
         }
 
-        // --- 2. NAVIGATION LOGIC ---
+        // --- NAVIGATION ---
         const menu = document.getElementById('mobile-menu');
         function toggleMenu() {
             menu.classList.toggle('open');
@@ -467,41 +463,34 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- 3. TOOLS LOGIC ---
+        // --- TOOLS ---
         function calcROAS() {
             const s = document.getElementById('t-spend').value;
             const r = document.getElementById('t-rev').value;
             if(s && r) {
-                const res = (r / s).toFixed(1);
-                document.getElementById('v-roas').innerText = res + 'x';
+                document.getElementById('v-roas').innerText = (r / s).toFixed(1) + 'x';
                 document.getElementById('r-roas').classList.remove('hidden');
             }
         }
-
         function calcLTV() {
             const aov = document.getElementById('t-aov').value;
-            const freq = document.getElementById('t-freq').value;
-            if(aov && freq) {
-                const ltv = (aov * freq * 3).toFixed(0);
-                document.getElementById('v-ltv').innerText = '$' + ltv;
+            const f = document.getElementById('t-freq').value;
+            if(aov && f) {
+                document.getElementById('v-ltv').innerText = '$' + (aov * f * 3).toFixed(0);
                 document.getElementById('r-ltv').classList.remove('hidden');
             }
         }
 
-        // --- 4. FORM LOGIC ---
+        // --- FORMS ---
         document.getElementById('growthForm').onsubmit = (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const originalText = btn.innerText;
             btn.innerText = 'AUDIT REQUESTED ✓';
-            btn.style.background = 'linear-gradient(to right, #10b981, #059669)';
+            btn.style.background = '#10b981';
             e.target.reset();
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.background = '';
-            }, 3000);
+            setTimeout(() => { btn.innerText = originalText; btn.style.background = ''; }, 3000);
         };
-        </html>
 
         window.onload = renderBlogs;
     </script>
